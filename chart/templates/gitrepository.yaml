@@ -1,0 +1,14 @@
+{{- if .Values.gitrepo.enabled }}
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+spec:
+  interval: 5m0s
+  url: {{ .Values.gitrepo.url }}
+  ref:
+    branch: {{ .Values.gitrepo.ref.branch }}
+{{- end }}
