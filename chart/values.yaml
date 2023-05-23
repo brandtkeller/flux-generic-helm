@@ -1,6 +1,7 @@
 
 gitrepo:
   enabled: true
+  name: "test"
   url: https://github.com/group/repo
   interval: "5m0s"
   ref:
@@ -12,6 +13,7 @@ gitrepo:
 
 helmrelease:
   enabled: true
+  name: "test"
   sourceType: "git"
   targetNamespace: test
   gitRepo:
