@@ -5,7 +5,6 @@ gitrepo:
   url: https://github.com/group/repo
   interval: "5m0s"
   ref:
-    path: "./chart"
     tag: "0.0.1"
     # branch: ""
     # commit: ""
