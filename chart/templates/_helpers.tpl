@@ -43,20 +43,32 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
+Build the appropriate spec.ref.{} given git branch, commit values
 */}}
-{{- define "chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "chart.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
+{{- define "validRef" -}}
+{{- if .commit -}}
+{{- if not .branch -}}
+{{- fail "A valid branch is required when a commit is specified!" -}}
+{{- end -}}
+branch: {{ .branch | quote }}
+commit: {{ .commit }}
+{{- else if .semver -}}
+semver: {{ .semver | quote }}
+{{- else if .tag -}}
+tag: {{ .tag }}
+{{- else -}}
+branch: {{ .branch | quote }}
+{{- end -}}
+{{- end -}}
 
 {{/*
-Create the name of the service account to use
+Build common set of file extensions to include/exclude
 */}}
-{{- define "chart.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "chart.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
+{{- define "gitIgnore" -}}
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.txt
+    /**/*.sh
+    !/chart/tests/scripts/*.sh
+{{- end -}}

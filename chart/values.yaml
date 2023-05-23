@@ -2,8 +2,13 @@
 gitrepo:
   enabled: true
   url: https://github.com/group/repo
+  interval: "5m0s"
   ref:
-    branch: "main"
+    path: "./chart"
+    tag: "0.0.1"
+    # branch: ""
+    # commit: ""
+    # semver: ""
 
 helmrelease:
   enabled: true
@@ -18,6 +23,8 @@ helmrelease:
     tag: "0.1.0"
     repoName: "test"
     helmRepoNamespace: "test"
+  valuesFrom: []
+  dependsOn: []
   postRenderers: {}
   
 

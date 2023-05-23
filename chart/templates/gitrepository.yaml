@@ -7,8 +7,9 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
 spec:
-  interval: 5m0s
+  interval: {{ .Values.gitrepo.interval }}
   url: {{ .Values.gitrepo.url }}
   ref:
-    branch: {{ .Values.gitrepo.ref.branch }}
+    {{- include "validRef" .Values.gitrepo.ref | nindent 4 }}
+  {{ include "gitIgnore" . }}
 {{- end }}

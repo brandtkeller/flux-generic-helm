@@ -30,11 +30,12 @@ spec:
   postRenderers:
   {{ toYaml .Values.helmrelease.postRenderers | nindent 4 }}
   {{- end }}
-  # valuesFrom:
-  #   - name: {{ .Release.Name }}-values
-  #     kind: Secret
-
-  # dependsOn:
-  #   - name: test
-  #     namespace: testnamespace
+  {{- if .Values.helmrelease.valuesFrom }}
+  valuesFrom:
+    {{- toYaml .Values.helmrelease.valuesFrom | nindent 4 }}
+  {{- end }}
+  {{- if .Values.helmrelease.dependsOn }}
+  dependsOn:
+    {{- toYaml .Values.helmrelease.dependsOn | nindent 4 }}
+  {{- end }}
 {{- end }}
