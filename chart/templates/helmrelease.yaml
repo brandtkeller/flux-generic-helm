@@ -24,7 +24,22 @@ spec:
         name: {{ .Values.helmrelease.helmRepo.repoName }}
         namespace: {{ .Values.helmrelease.helmRepo.helmRepoNamespace}}
       {{- end }}
-      interval: 5m
+      interval: {{ .Values.helmrelease.chartInterval }}
+  timeout: {{ .Values.helmrelease.timeout }}
+  interval: {{ .Values.helmrelease.interval }}
+  test:
+    enable: {{ .Values.helmrelease.test.enable }}
+  install:
+    remediation:
+      retries: {{ .Values.helmrelease.install.remediation.retries }}
+  upgrade:
+    remediation:
+      retries: {{ .Values.helmrelease.upgrade.remediation.retries }}
+      remediateLastFailure: {{ .Values.helmrelease.upgrade.remediation.remediateLastFailure }}
+    cleanupOnFail: {{ .Values.helmrelease.upgrade.cleanupOnFail }}
+  rollback:
+    timeout: {{ .Values.helmrelease.rollback.timeout }}
+    cleanupOnFail: {{ .Values.helmrelease.rollback.cleanupOnFail }}
 
   {{- if .Values.helmrelease.postRenderers }}
   postRenderers:

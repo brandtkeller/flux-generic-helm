@@ -15,6 +15,7 @@ helmrelease:
   name: "test"
   sourceType: "git"
   targetNamespace: test
+  chartInterval: "5m"
   gitRepo:
     path: "chart/"
     gitRepoName: "test"
@@ -24,6 +25,21 @@ helmrelease:
     tag: "0.1.0"
     repoName: "test"
     helmRepoNamespace: "test"
+  timeout: 10m
+  interval: 2m
+  test:
+    enable: false
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
   valuesFrom: []
   dependsOn: []
   postRenderers: {}
